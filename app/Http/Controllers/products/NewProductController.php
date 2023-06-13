@@ -27,7 +27,7 @@ class NewProductController extends Controller
             ->select('p.*','pc.id as cat_id', 'pc.category_name','pb.id as cat_id', 'pb.brand_name')
             ->paginate(5);
 //        dd($data);
-        return view('products.index', ['data' => $data, 'pageName'=>$this->pageName]);
+        return view('products.newindex', ['data' => $data, 'pageName'=>$this->pageName]);
     }
 
     /**
