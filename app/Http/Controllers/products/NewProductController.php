@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use App\Models\Products;
 use App\Models\NewProduct;
+use App\Models\ProductImage;
 use App\Models\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,11 +60,21 @@ class NewProductController extends Controller
             'long_description' => 'required',
             'product_qty' => 'required',
             'product_sku' => 'required',
-            'product_price' => 'required'
+            'product_price' => 'required',
+            'file' => 'required',
         ]);
-
+        $imageNameArr = [];
+            foreach ($request->file('file') as $file) {
+                // you can also use the original name
+                $imageName = time() . '-' . $file->getClientOriginalName();
+                $imageNameArr[] = $imageName;
+                // Upload file to public path in images directory
+                $file->move(public_path('product_images'), $imageName);
+                $image[] = $imageName;
+            }
         // Create a new product instance
         // print_r($data);die;
+        
         $product = new NewProduct();
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];
@@ -74,6 +85,10 @@ class NewProductController extends Controller
         $product->qty_in_stock = $data['product_qty'];
         $product->price = $data['product_price'];
         $product->save();
+        $file = new ProductImage();
+        $file->product_id = $product->id;
+        $file->product_images = json_encode($image);
+        $file->save();
         // Redirect or perform any other actions
         return redirect()->route('products.index')->with('success', 'Product saved successfully.');
     }
