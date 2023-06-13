@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function productDetails($id) {
 
 //        $categories = DB::table('product_category')->get();
+$user_id = \Illuminate\Support\Facades\Auth::user()->id;
         $product = DB::table('new_products as pr')
             ->leftJoin('product_images as pi', 'pi.product_id', '=', 'pr.id')
             ->where('pr.id', '=', $id)
@@ -33,8 +34,10 @@ class HomeController extends Controller
             ->limit(15)
             ->get();
         $product_images = json_decode($product->product_images);
-//        dd($product);
-        return view('frontend.pages.product-detail', ['product'=>$product, 'product_images'=>$product_images,'related_products'=>$related_products]);
+        $size_check = DB::table('user_sizes')->select('status')->where('user_id',$user_id)->first();
+    //    dd($size_check->status);
+        return view('frontend.pages.product-detail', ['product'=>$product, 'product_images'=>$product_images,
+        'related_products'=>$related_products , 'size_check' => $size_check]);
     }
 
     public function shop() {

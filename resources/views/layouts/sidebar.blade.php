@@ -79,6 +79,28 @@
             </div> -->
         </li>
         <li class="nav-item menu-items">
+            <a class="nav-link" href="{{route('variation.index')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                <span class="menu-title">Products Variation</span>
+            </a>
+            <!-- <div class="collapse" id="">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('products.index')}}">Products Listing</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('products.create')}}">Products Create</a></li>
+                </ul>
+            </div> -->
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{route('variation.option.index')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                <span class="menu-title">Variation Options</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
             <a class="nav-link" href="{{route('category.index')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
