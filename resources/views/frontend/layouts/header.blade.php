@@ -94,7 +94,124 @@
                 <div class="col-xl-4 col-lg-3 col-6 col-md-6 col-sm-6 col-9">
                     <div class="header-right">
                         <ul class="text-right">
-                            <li><a href="login.html" class="account"><i class="fal fa-user-friends"></i> <article class="account-registar d-inline-block">Login/Sign up</article></a></li>
+                            @php
+                            if (Auth::user() === null) {
+                            @endphp
+                                <li><a href="{{route('user.login.index')}}" class="account"><i class="fal fa-user-friends"></i> <article class="account-registar d-inline-block">Login/Sign up</article></a></li>
+                            <li><a href="javascript:void(0)"><i class="fal fa-search"></i></a>
+
+                                <!-- search popup -->
+                                <div id="search-popup">
+                                    <div class="close-search-popup">
+                                        <i class="fal fa-times"></i>
+                                    </div>
+                                    <div class="search-popup-inner mt-135">
+                                        <div class="search-title text-center">
+                                            <h2>Search</h2>
+                                        </div>
+
+                                        <div class="search-content pt-55">
+                                            <ul class="text-center">
+                                                <li><a href="javascript:void(0)" class="active">All categories</a></li>
+                                                <li><a href="javascript:void(0)">Clothing</a></li>
+                                                <li><a href="javascript:void(0)">Gift Cards</a></li>
+                                                <li><a href="javascript:void(0)">Handbag</a></li>
+                                                <li><a href="javascript:void(0)">Kids</a></li>
+                                                <li><a href="javascript:void(0)">Shoes</a></li>
+                                                <li><a href="javascript:void(0)">Sneaker</a></li>
+                                                <li><a  href="javascript:void(0)">Women</a></li>
+                                            </ul>
+
+                                            <div class="search-form mt-35">
+                                                <form action="#" method="post">
+                                                    <input type="text" placeholder="Search Products...">
+                                                    <button type="submit"><i class="fal fa-search"></i></button>
+                                                </form>
+                                            </div>
+
+                                            <div class="search-result-list">
+                                                <ul class="text-left">
+                                                    <li class="d-block d-flex align-items-center">
+                                                        <div class="search-result-img">
+                                                            <img src="img/product/1.jpg" class="w-100" alt="">
+                                                        </div>
+                                                        <div class="search-result-desc pl-10">
+                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>
+                                                            <div class="price">$<span>399</span></div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-block d-flex align-items-center">
+                                                        <div class="search-result-img">
+                                                            <img src="img/product/2.jpg" class="w-100" alt="">
+                                                        </div>
+                                                        <div class="search-result-desc pl-10">
+                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>
+                                                            <div class="price">$<span>399</span></div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-block d-flex align-items-center">
+                                                        <div class="search-result-img">
+                                                            <img src="img/product/3.jpg" class="w-100" alt="">
+                                                        </div>
+                                                        <div class="search-result-desc pl-10">
+                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>
+                                                            <div class="price">$<span>399</span></div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-block d-flex align-items-center">
+                                                        <div class="search-result-img">
+                                                            <img src="img/product/1.jpg" class="w-100" alt="">
+                                                        </div>
+                                                        <div class="search-result-desc pl-10">
+                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>
+                                                            <div class="price">$<span>399</span></div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-block d-flex align-items-center">
+                                                        <div class="search-result-img">
+                                                            <img src="img/product/2.jpg" class="w-100" alt="">
+                                                        </div>
+                                                        <div class="search-result-desc pl-10">
+                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>
+                                                            <div class="price">$<span>399</span></div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-block d-flex align-items-center">
+                                                        <div class="search-result-img">
+                                                            <img src="img/product/3.jpg" class="w-100" alt="">
+                                                        </div>
+                                                        <div class="search-result-desc pl-10">
+                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>
+                                                            <div class="price">$<span>399</span></div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="{{route('user.login.index')}}">
+                                    <i class="fal fa-shopping-bag"><span></span></i></a>
+                            </li>
+{{--                            <li><a href="javascript:void(0)"><i class="fal fa-align-right"></i></a>--}}
+{{--                                <ul class="submenu bold-content text-right">--}}
+{{--                                    <li><a href="registar.html">My Account</a></li>--}}
+{{--                                    <li><a href="checkout.html">Checkout</a></li>--}}
+{{--                                    <li><a href="shop.html">Shop</a></li>--}}
+{{--                                    <li><a href="wishlist.html">Wishlist</a></li>--}}
+{{--                                    <li><a href="question.html">Frequently</a></li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
+                            @php
+                                }
+                            @endphp
+
+                            @php
+                                if (Auth::user() !== null) {
+                            @endphp
                             <li><a href="javascript:void(0)"><i class="fal fa-search"></i></a>
 
                                 <!-- search popup -->
@@ -192,73 +309,22 @@
                             </li>
                             <li><a href="wishlist.html" data-toggle="tooltip" data-placement="bottom" title="view wishlist"><i class="fal fa-heart"><span>0</span></i></a></li>
                             <li><a href="cart.html"><i class="fal fa-shopping-bag"><span>5</span></i></a>
-                                <div class="minicart">
-                                    <div class="minicart-body">
-                                        <div class="minicart-content">
-                                            <ul class="text-left">
-                                                <li>
-                                                    <div class="minicart-img">
-                                                        <a href="single-product-5.html" class="p-0"><img src="img/product/1.jpg" class="w-100" alt=""></a>
-                                                    </div>
-                                                    <div class="minicart-desc">
-                                                        <a href="single-product-5.html" class="p-0">Capitalize on low hanging fruit t</a>
-                                                        <strong>1 × $250.00</strong>
-                                                    </div>
-                                                    <div class="remove">
-                                                        <i class="fal fa-times"></i>
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="minicart-img">
-                                                        <a href="single-product-5.html" class="p-0"><img src="img/product/2.jpg" class="w-100" alt=""></a>
-                                                    </div>
-                                                    <div class="minicart-desc">
-                                                        <a href="single-product-5.html" class="p-0">Leather Courriere duffle ba</a>
-                                                        <strong>1 × $150.00</strong>
-                                                    </div>
-                                                    <div class="remove">
-                                                        <i class="fal fa-times"></i>
-                                                    </div>
-                                                </li>
-
-
-                                                <li>
-                                                    <div class="minicart-img">
-                                                        <a href="single-product-5.html" class="p-0"><img src="img/product/3.jpg" class="w-100" alt=""></a>
-                                                    </div>
-                                                    <div class="minicart-desc">
-                                                        <a href="single-product-5.html" class="p-0">Party Supplies Around Cupcake</a>
-                                                        <strong>1 × $150.00</strong>
-                                                    </div>
-                                                    <div class="remove">
-                                                        <i class="fal fa-times"></i>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="minicart-checkout">
-                                        <div class="minicart-checkout-heading mt-8 mb-25 overflow-hidden">
-                                            <strong class="float-left">Subtotal:</strong>
-                                            <span class="price float-right">503.00</span>
-                                        </div>
-                                        <div class="minicart-checkout-links">
-                                            <a href="cart.html" class="generic-btn black-hover-btn text-uppercase w-100 mb-20">View cart</a>
-                                            <a href="checkout.html" class="generic-btn black-hover-btn text-uppercase w-100 mb-20">Checkout</a>
-                                        </div>
-                                    </div>
-                                </div>
                             </li>
                             <li><a href="javascript:void(0)"><i class="fal fa-align-right"></i></a>
                                 <ul class="submenu bold-content text-right">
-                                    <li><a href="registar.html">My Account</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
+                                    <li><a href="{{route('user.profile')}}">My Account</a></li>
+{{--                                    <li><a href="checkout.html">Checkout</a></li>--}}
                                     <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="question.html">Frequently</a></li>
+                                    <li><a href="{{route('logout')}}">Logout</a></li>
+{{--                                    <li><a href="wishlist.html">Wishlist</a></li>--}}
+{{--                                    <li><a href="question.html">Frequently</a></li>--}}
                                 </ul>
                             </li>
+                            @php
+                                }
+                            @endphp
+
+
                         </ul>
                     </div>
                 </div>
