@@ -13,6 +13,7 @@ use App\Http\Controllers\productVariation\ProductVariationController;
 use App\Http\Controllers\productvariation\ProductVariationOptionsController;
 use App\Http\Controllers\roles\RolesController;
 use App\Http\Controllers\user\UserController;
+use App\Http\Controllers\frontend\UserSizeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,7 @@ Route::get('user/profile', [ProfileController::class,'index'])->name('user.profi
 
 
 Route::get('home', [HomeController::class,'index'])->name('home.index');
+Route::post('size/store', [UserSizeController::class,'store'])->name('size.store');
 Route::get('product/details/{id}', [HomeController::class,'productDetails'])->name('product.details');
 
 Route::middleware([\App\Http\Middleware\Authenticate::class])->group(function () {

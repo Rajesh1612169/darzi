@@ -1,5 +1,16 @@
 @extends('frontend.layouts.app')
 @section('content')
+@if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+
+        @if(session()->has('errors'))
+            <div class="alert alert-danger">
+                {{ session()->get('errors') }}
+            </div>
+        @endif
     <!-- single product start -->
     <section class="single-product mb-90">
         <div class="container-fluid">
@@ -50,9 +61,22 @@
                                         </form>
                                     </div>
                                     <div class="single-product-component col-md-6">
+                                    @php
+                                    if($size_check->status == 'yes'){
+                    @endphp
+                                      
+                                        <button type="button" class="generic-btn mt-70 red-hover-btn text-uppercase" >
+                                            Your Size is saved in our system
+                                        </button>
+                                        @php
+                                    }else{
+                    @endphp
                                         <button type="button" class="generic-btn mt-70 red-hover-btn text-uppercase" data-toggle="modal" data-target="#exampleModalRight">
                                             Customization
                                         </button>
+                                        @php
+                                    }
+                    @endphp
                                     </div>
                                     <div class="single-product-action mt-35">
                                         <ul>
@@ -195,30 +219,35 @@
                         <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                     </div>
                     <!-- Body type -->
+                    <form method="post" action="{{route('size.store')}}">
+                        @csrf
                     <p class="mt-5">Select body type</p>
                     <div class="row">
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk" value="athletic">
                             <label for="img1">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 1">
+                                <p>Athletic</p>
                                 <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img2" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground" id="img2" class="d-none imgbgchk" value="slight_belly">
                             <label for="img2">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 2">
+                                <p>Slight Belly</p>
                                 <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img3" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground" id="img3" class="d-none imgbgchk" value="significiant_belly">
                             <label for="img3">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 3">
+                                <p>Significiant Belly</p>
                                 <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
@@ -271,65 +300,58 @@
                     <p class="mt-5">Select Shirt Size</p>
                     <div class="radio-group">
                         <label>
-                            <input type="radio" name="option" value="1" checked>
+                            <input type="radio" name="option1" value="1" checked>
                             <div class="radio-button"><span>1</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="2">
+                            <input type="radio" name="option1" value="2">
                             <div class="radio-button"><span>2</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="3">
+                            <input type="radio" name="option1" value="3">
                             <div class="radio-button"><span>3</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="4">
+                            <input type="radio" name="option1" value="4">
                             <div class="radio-button"><span>4</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="5">
+                            <input type="radio" name="option1" value="5">
                             <div class="radio-button"><span>5</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="6">
+                            <input type="radio" name="option1" value="6">
                             <div class="radio-button"><span>6</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="7">
+                            <input type="radio" name="option1" value="7">
                             <div class="radio-button"><span>7</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="8">
+                            <input type="radio" name="option1" value="8">
                             <div class="radio-button"><span>8</span></div>
                         </label>
 
                     </div>
 
                     <!-- Select Shoulder Type -->
-                    <p class="mt-5">Select Shoulder Type</p>
+                    <p class="mt-5">Select Shoulder type</p>
                     <div class="row">
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground1213" id="img7" class="d-none imgbgchk" value="average" checked>
                             <label for="img1">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 1">
+                                <p>Average</p>
                                 <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img2" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground1213" id="img8" class="d-none imgbgchk" value="slopping">
                             <label for="img2">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 2">
-                                <div class="tick_container">
-                                    <div class="tick"><i class="fa fa-check"></i></div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img3" class="d-none imgbgchk" value="">
-                            <label for="img3">
-                                <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 3">
+                                <p>Sloping</p>
                                 <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
@@ -343,28 +365,31 @@
                     <p class="mt-5">Select Preferred Fit</p>
                     <div class="row">
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground2" id="img4" class="d-none imgbgchk" value="slim" checked>
                             <label for="img1">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 1">
                                 <div class="tick_container">
+                                <p>Super Slim</p>
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img2" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground2" id="img5" class="d-none imgbgchk" value="structure">
                             <label for="img2">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 2">
                                 <div class="tick_container">
+                                <p>Structured</p>
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img3" class="d-none imgbgchk" value="">
+                            <input type="radio" name="imgbackground2" id="img6" class="d-none imgbgchk" value="relax">
                             <label for="img3">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 3">
                                 <div class="tick_container">
+                                <p>Relaxed</p>
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
@@ -375,11 +400,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+    <!-- Modal End -->
     <div class="footer-top mt-120 pb-120 pt-115" style="background-color: #f5f5f5;">
         <div class="footer-top-wrapper">
             <div class="newsletter ">
