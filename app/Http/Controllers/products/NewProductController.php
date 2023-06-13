@@ -50,6 +50,7 @@ class NewProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $data = $request->validate([
             'brand_id' => 'required',
             'category_id' => 'required',
@@ -62,7 +63,7 @@ class NewProductController extends Controller
         ]);
 
         // Create a new product instance
-        dd($data);
+        // print_r($data);die;
         $product = new NewProduct();
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];

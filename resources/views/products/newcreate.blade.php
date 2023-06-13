@@ -35,7 +35,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Select Category</label>
-                                <select class="js-example-basic-single w-100" name="category_id">
+                                <select class="js-example-basic-single w-100" name="brand_id">
                                     <option disabled selected>Select Category</option>
                                                                         @foreach($brand as $item)
                                                                             <option value="{{$item->id}}">{{$item->brand_name}}</option>
