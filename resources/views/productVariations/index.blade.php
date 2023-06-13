@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <a href="{{route('variation.create')}}" type="button" class="btn btn-primary btn-fw float-right mb-3 pt-2 pb-2">Create Category</a>
+                        <a href="{{route('variation.create')}}" type="button" class="btn btn-primary btn-fw float-right mb-3 pt-2 pb-2">Create Variation</a>
                     </div>
                 </div>
                 <div class="table-responsive table-bordered">
