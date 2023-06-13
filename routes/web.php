@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\products\ProductCategoryController;
 use App\Http\Controllers\products\ProductController;
+use App\Http\Controllers\products\NewProductController;
 use App\Http\Controllers\products\ProductItemsController;
 use App\Http\Controllers\productVariation\ProductVariationController;
 use App\Http\Controllers\productvariation\ProductVariationOptionsController;
@@ -91,8 +92,10 @@ Route::get('product/variation/options/edit/{id}', [ProductVariationOptionsContro
 Route::post('product/variation/options/update/{id}', [ProductVariationOptionsController::class,'update'])->name('variation.option.update');
 
 Route::get('products', [ProductController::class,'index'])->name('products.index');
-Route::get('product/create', [ProductController::class,'create'])->name('products.create');
-Route::post('product/store', [ProductController::class,'store'])->name('products.store');
+//Route::get('product/create', [ProductController::class,'create'])->name('products.create');
+Route::get('product/create', [NewProductController::class,'create'])->name('products.create');
+//Route::post('product/store', [ProductController::class,'store'])->name('products.store');
+Route::post('product/store', [NewProductController::class,'store'])->name('products.store');
 Route::get('product/show/{id}', [ProductController::class,'show'])->name('products.show');
 Route::get('product/destroy/{id}', [ProductController::class,'destroy'])->name('products.destroy');
 Route::get('product/edit/{id}', [ProductController::class,'edit'])->name('products.edit');
