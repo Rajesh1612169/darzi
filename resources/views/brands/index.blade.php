@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <a href="{{route('roles.create')}}" type="button" class="btn btn-primary btn-fw float-right mb-3 pt-2 pb-2">Create Role</a>
+                        <a href="{{route('brands.create')}}" type="button" class="btn btn-primary btn-fw float-right mb-3 pt-2 pb-2">Create Brand</a>
                     </div>
                 </div>
                 <div class="table-responsive table-bordered">
@@ -40,7 +40,7 @@
                         <tr>
                             <td> {{++$key}} </td>
                             <td> {{$item->id}} </td>
-                            <td>{{$item->role_type}}</td>
+                            <td>{{$item->brand_name}}</td>
                             <td>
                                 <a href="{{route('roles.edit',$item->id )}}" class="btn btn-dribbble btn-sm mr-2" title="edit">
                                     <span class="mdi mdi-pencil"></span>
@@ -57,7 +57,6 @@
                         </tbody>
 
                     </table>
-                    {!! $data->links() !!}
                 </div>
 
             </div>
