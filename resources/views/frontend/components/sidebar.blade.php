@@ -3,7 +3,7 @@
     <hr>
     <div class="row">
         <div class="col-md-2 mb-3">
-            <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+            <ul class="nav nav-pills flex-column" id="myTab"  role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
                 </li>
