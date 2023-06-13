@@ -34,4 +34,12 @@ class HomeController extends Controller
 //        dd($product);
         return view('frontend.pages.product-detail', ['product'=>$product, 'product_images'=>$product_images,'related_products'=>$related_products]);
     }
+
+    public function shop() {
+        $products = DB::table('new_products as pr')
+            ->leftJoin('product_images as pi', 'pi.product_id', '=', 'pr.id')
+            ->get();
+        return view('frontend.pages.shop', ['products'=>$products]);
+
+    }
 }

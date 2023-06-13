@@ -42,6 +42,9 @@ Route::get('user/profile', [ProfileController::class,'index'])->name('user.profi
 Route::get('home', [HomeController::class,'index'])->name('home.index');
 Route::get('product/details/{id}', [HomeController::class,'productDetails'])->name('product.details');
 
+Route::get('shop', [HomeController::class,'shop'])->name('shop.index');
+
+
 Route::middleware([\App\Http\Middleware\Authenticate::class])->group(function () {
 
 //Dashboard Route
