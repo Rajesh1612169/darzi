@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\frontend\AuthController;
 use App\Http\Controllers\frontend\HomeController;
+use App\Http\Controllers\frontend\ProfileController;
 use App\Http\Controllers\products\ProductCategoryController;
 use App\Http\Controllers\products\ProductController;
 use App\Http\Controllers\products\ProductItemsController;
@@ -23,6 +25,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Dashboard Route
+Route::get('login/user', [AuthController::class,'index'])->name('user.login.index');
+Route::post('login/user/post', [AuthController::class,'login'])->name('user.login.post');
+
+
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/home');
+})->name('logout');
+
+Route::get('user/profile', [ProfileController::class,'index'])->name('user.profile');
+
+
 Route::get('home', [HomeController::class,'index'])->name('home.index');
 
 Route::middleware([\App\Http\Middleware\Authenticate::class])->group(function () {
