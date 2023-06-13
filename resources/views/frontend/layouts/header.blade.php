@@ -87,10 +87,9 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-3">
                     <div class="logo">
-                        <a href="index.html"><img src="{{asset('frontend/img/logo/logo1.png')}}" alt=""></a>
+                        <a href="index.html"><img src="{{asset('frontend/img/logo/logo.png')}}" alt=""></a>
                     </div>
                 </div>
-
                 <div class="col-xl-4 col-lg-3 col-6 col-md-6 col-sm-6 col-9">
                     <div class="header-right">
                         <ul class="text-right">

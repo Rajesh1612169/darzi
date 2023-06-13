@@ -38,11 +38,14 @@ Route::get('/logout', function () {
 
 Route::get('user/profile', [ProfileController::class,'index'])->name('user.profile');
 
-
 Route::get('home', [HomeController::class,'index'])->name('home.index');
 Route::get('product/details/{id}', [HomeController::class,'productDetails'])->name('product.details');
 
 Route::get('shop', [HomeController::class,'shop'])->name('shop.index');
+
+Route::post('add/to/cart', [HomeController::class,'addToCart'])->name('add.to.cart');
+Route::get('my/cart/items', [HomeController::class,'myCart'])->name('my.cart.items');
+
 
 
 Route::middleware([\App\Http\Middleware\Authenticate::class])->group(function () {

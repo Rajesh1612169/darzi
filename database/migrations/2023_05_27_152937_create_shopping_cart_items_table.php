@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->foreign('cart_id')->references('id')->on('shopping_cart')
                 ->onDelete('cascade');
-            $table->foreign('product_item_id')->references('id')->on('product_items')
+            $table->foreign('product_item_id')->references('id')->on('new_products')
                 ->onDelete('cascade');
         });
     }

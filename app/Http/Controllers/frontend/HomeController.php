@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -38,8 +40,43 @@ class HomeController extends Controller
     public function shop() {
         $products = DB::table('new_products as pr')
             ->leftJoin('product_images as pi', 'pi.product_id', '=', 'pr.id')
-            ->get();
+            ->paginate(15);
         return view('frontend.pages.shop', ['products'=>$products]);
 
+    }
+
+    public function addToCart(Request $request) {
+//        dd($request->user_id);
+
+        $insertedId = DB::table('shopping_cart')->insertGetId([
+            'user_id' => $request->user_id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+//        dd($insertedId);
+
+        $insertedId = DB::table('shopping_cart_items')->insertGetId([
+            'cart_id' => $insertedId,
+            'product_item_id' => $request->product_item_id,
+            'qty' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return redirect()->back();
+
+    }
+
+    public function myCart() {
+        $user_id = Auth::user()->id;
+        $cart_items = DB::table('shopping_cart as sc')
+            ->leftJoin('shopping_cart_items as sci', 'sci.cart_id', '=', 'sc.id')
+            ->leftJoin('new_products as np', 'np.id', '=', 'sci.product_item_id')
+            ->leftJoin('product_images as pi', 'pi.product_id', '=', 'np.id')
+            ->where('sc.user_id', '=', $user_id)
+            ->get();
+//        dd($cart_items);
+        return view('frontend.pages.cart-items', ['cart_items'=>$cart_items]);
     }
 }

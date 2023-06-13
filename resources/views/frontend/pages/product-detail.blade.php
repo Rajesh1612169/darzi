@@ -39,13 +39,19 @@
                                     </div>
 
                                     <div class="quick-quantity mt-10">
-                                        <form action="#" method="POST">
-                                            <div class="total-cart"><span class="cart-count">{{$product->qty_in_stock}} in stock (can be
+                                        <div class="total-cart"><span class="cart-count">{{$product->qty_in_stock}} in stock (can be
                                                     backordered)</span></div>
+                                        <form action="{{route('add.to.cart')}}" method="POST">
+                                            @csrf
+
+                                            @php
+                                            $user_id = \Illuminate\Support\Facades\Auth::user()->id;
+//                                            dd($product->id);
+                                            @endphp
+                                            <input type="text" name="user_id" value="{{$user_id}}">
+                                            <input type="text" name="product_item_id" value="{{$product->id}}">
                                             <button type="submit" class="list-add-cart-btn red-hover-btn border-0"
-                                                    style="padding-left: 80px;padding-right: 80px;transition: all .5s;">add
-                                                to
-                                                cart
+                                                    style="padding-left: 80px;padding-right: 80px;transition: all .5s;">add to cart
                                             </button>
                                         </form>
                                     </div>
