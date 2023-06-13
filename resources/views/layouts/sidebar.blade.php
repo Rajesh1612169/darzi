@@ -56,29 +56,55 @@
         <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
         </li>
-        <li class="nav-item menu-items">
+        <!-- <li class="nav-item menu-items">
             <a class="nav-link" href="index.html">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
                 <span class="menu-title">Dashboard</span>
             </a>
-        </li>
+        </li> -->
         <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="{{route('products.index')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
-                <span class="menu-title">Settings</span>
-                <i class="menu-arrow"></i>
+                <span class="menu-title">Products</span>
             </a>
-            <div class="collapse" id="ui-basic">
+            <!-- <div class="collapse" id="">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('products.index')}}">Products Listing</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('products.create')}}">Products Create</a></li>
                 </ul>
-            </div>
+            </div> -->
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{route('category.index')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                <span class="menu-title">Categories</span>
+            </a>
+            <!-- <div class="collapse" id="">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('category.index')}}">Products Categories Listing</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('category.create')}}">Products Categories Create</a></li>
+                </ul>
+            </div> -->
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{route('brands.index')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+                <span class="menu-title">Brands</span>
+            </a>
+            <!-- <div class="collapse" id="">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('category.index')}}">Products Categories Listing</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('category.create')}}">Products Categories Create</a></li>
+                </ul>
+            </div> -->
         </li>
         <li class="nav-item menu-items">
             <a class="nav-link" href="{{route('users.index')}}">

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class BrandsController extends Controller
 {
+
+    public $pageName = 'Brand Management';
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +18,10 @@ class BrandsController extends Controller
     public function index()
     {
         //
+        isset($request->search) ? dd($request->search) : '';
+        $data = Brands::all();
+//        dd($data);
+        return view('brands.index', ['data' => $data, 'pageName'=>$this->pageName]);
     }
 
     /**
@@ -26,6 +32,7 @@ class BrandsController extends Controller
     public function create()
     {
         //
+        return view('brands.create', ['pageName'=>$this->pageName]);
     }
 
     /**
@@ -37,6 +44,14 @@ class BrandsController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->validate([
+            'brand_name' => 'required',
+        ]);
+        $brand = new Brands();
+        $brand->brand_name = $data['brand_name'];
+        $brand->save();
+        // Redirect or perform any other actions
+        return redirect()->route('brands.index')->with('success', 'Brand saved successfully.');
     }
 
     /**

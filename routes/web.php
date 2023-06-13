@@ -8,6 +8,7 @@ use App\Http\Controllers\products\ProductCategoryController;
 use App\Http\Controllers\products\ProductController;
 use App\Http\Controllers\products\NewProductController;
 use App\Http\Controllers\products\ProductItemsController;
+use App\Http\Controllers\brands\BrandsController;
 use App\Http\Controllers\productVariation\ProductVariationController;
 use App\Http\Controllers\productvariation\ProductVariationOptionsController;
 use App\Http\Controllers\roles\RolesController;
@@ -124,3 +125,11 @@ Route::get('product/items/show/{id}', [ProductItemsController::class,'show'])->n
 Route::get('product/items/destroy/{id}', [ProductItemsController::class,'destroy'])->name('product.items.destroy');
 Route::get('product/items/edit/{id}', [ProductItemsController::class,'edit'])->name('product.items.edit');
 Route::post('product/items/update/{id}', [ProductItemsController::class,'update'])->name('product.items.update');
+
+//Brands
+// Route::get('products', [ProductController::class,'index'])->name('products.index');
+Route::get('brand', [BrandsController::class,'index'])->name('brands.index');
+//Route::get('product/create', [ProductController::class,'create'])->name('products.create');
+Route::get('brand/create', [BrandsController::class,'create'])->name('brands.create');
+//Route::post('product/store', [ProductController::class,'store'])->name('products.store');
+Route::post('brand/store', [BrandsController::class,'store'])->name('brands.store');
