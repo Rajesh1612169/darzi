@@ -105,7 +105,8 @@ Route::get('product/variation/options/destroy/{id}', [ProductVariationOptionsCon
 Route::get('product/variation/options/edit/{id}', [ProductVariationOptionsController::class,'edit'])->name('variation.option.edit');
 Route::post('product/variation/options/update/{id}', [ProductVariationOptionsController::class,'update'])->name('variation.option.update');
 
-Route::get('products', [ProductController::class,'index'])->name('products.index');
+// Route::get('products', [ProductController::class,'index'])->name('products.index');
+Route::get('products', [NewProductController::class,'index'])->name('products.index');
 //Route::get('product/create', [ProductController::class,'create'])->name('products.create');
 Route::get('product/create', [NewProductController::class,'create'])->name('products.create');
 //Route::post('product/store', [ProductController::class,'store'])->name('products.store');
