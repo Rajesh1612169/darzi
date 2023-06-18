@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 //Dashboard Route
 Route::get('login/user', [AuthController::class,'index'])->name('user.login.index');
 Route::post('login/user/post', [AuthController::class,'login'])->name('user.login.post');
+Route::post('pd/login/user/post', [AuthController::class,'pdlogin'])->name('pd.login.post');
 
 
 Route::get('/logout', function () {
@@ -38,6 +39,7 @@ Route::get('/logout', function () {
 })->name('logout');
 
 Route::get('user/profile', [ProfileController::class,'index'])->name('user.profile');
+Route::post('user/profile/update', [ProfileController::class,'profileUpdate'])->name('profile.update');
 
 Route::get('home', [HomeController::class,'index'])->name('home.index');
 Route::post('size/store', [UserSizeController::class,'store'])->name('size.store');
@@ -47,7 +49,15 @@ Route::get('shop', [HomeController::class,'shop'])->name('shop.index');
 
 Route::post('add/to/cart', [HomeController::class,'addToCart'])->name('add.to.cart');
 Route::get('my/cart/items', [HomeController::class,'myCart'])->name('my.cart.items');
+Route::post('update/my/cart/items', [HomeController::class,'updateMyCart'])->name('update.my.cart.items');
+Route::get('delete/cart/item/{cart_id}/{product_id}', [HomeController::class,'deleteCart'])->name('delete.cart.item');
 
+Route::get('add/to/whishlist/{product_id}', [ProfileController::class,'addToWishList'])->name('add.to.whishlist');
+Route::get('delete/whishlist/{id}/{product_id}', [ProfileController::class,'deleteWhishlist'])->name('delete.whishlist.item');
+
+
+Route::get('create/new/order', [HomeController::class,'createNewOrder'])->name('create.new.order');
+Route::get('create/new/order/post', [HomeController::class,'createNewOrderPost'])->name('create.new.order.post');
 
 
 Route::middleware([\App\Http\Middleware\Authenticate::class])->group(function () {
@@ -141,3 +151,8 @@ Route::get('brand', [BrandsController::class,'index'])->name('brands.index');
 Route::get('brand/create', [BrandsController::class,'create'])->name('brands.create');
 //Route::post('product/store', [ProductController::class,'store'])->name('products.store');
 Route::post('brand/store', [BrandsController::class,'store'])->name('brands.store');
+
+
+// Api routes
+Route::get('searchOption', [HomeController::class,'searchOption'])->name('searchOption');
+

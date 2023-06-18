@@ -38,123 +38,161 @@
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-8 col-12">
-                            <div class="single-product-sidebar">
+                            <div class="single-product-sidebar w-75">
                                 <div class="product-content">
                                     <div class="single-product-title">
                                         <h2>{{$product->product_name}}</h2>
                                     </div>
-                                    <div class="single-product-price">$<span>{{$product->price}}</span></div>
+                                    <div class="single-product-price">$ {{$product->price}} <span style="color: grey;font-size: 16px"><small>Incl. All Taxes</small></span></div>
                                     <div class="single-product-desc mb-25">
                                         <p>{{$product->short_description}}</p>
 
                                     </div>
 
+                                    @php
+                                        $user = \Illuminate\Support\Facades\Auth::user();
+                                        if (isset($user->id) && $user->id) {
+                                            $user_id = $user->id;
+                                        }
+                                            $my_size = \Illuminate\Support\Facades\DB::table('user_sizes')
+                                            ->where('user_id','=', isset($user_id) && $user_id)
+                                            ->first();
+                                            //dd($my_size);
+                                    if ($my_size !== null) {
+                                    @endphp
+                                    <div class="fitsmart-button">
+                                        <div class="measureImg"><img src="https://cdn.shopify.com/s/files/1/0538/8841/7962/files/Vector_d6c0b66a-8373-4808-8fa4-9e25739f1dff.svg?v=1674474320"></div>
+                                        <div class="fitsmart-info">Your custom size is saved with us.</div>
+                                        <div>
+                                            <a type="button" data-toggle="modal" data-target="#exampleModalRight" style="cursor: pointer">View</a>
+                                        </div>
+                                    </div>
+                                    @php
+                                        }
+                                    @endphp
                                     <div class="quick-quantity mt-10">
                                         <div class="total-cart"><span class="cart-count">{{$product->qty_in_stock}} in stock (can be
                                                     backordered)</span></div>
-                                        <form action="{{route('add.to.cart')}}" method="POST">
-                                            @csrf
+                                     <div class="d-flex">
+                                         <form class="w-100" action="{{route('add.to.cart')}}" method="POST">
+                                             @csrf
+                                             <input type="hidden" name="product_item_id" value="{{$product->id}}">
+                                           <div class="d-flex align-items-baseline">
+                                               @php
+                                                if (\Illuminate\Support\Facades\Auth::check()) {
 
-                                            @php
-                                            $user_id = \Illuminate\Support\Facades\Auth::user()->id;
-//                                            dd($product->id);
-                                            @endphp
-                                            <input type="text" name="user_id" value="{{$user_id}}">
-                                            <input type="text" name="product_item_id" value="{{$product->id}}">
-                                            <button type="submit" class="list-add-cart-btn red-hover-btn border-0"
-                                                    style="padding-left: 80px;padding-right: 80px;transition: all .5s;">add to cart
-                                            </button>
-                                        </form>
+                                               @endphp
+                                               <button type="submit" class="mt-0 mr-2 w-50 generic-btn red-hover-btn text-uppercase"
+                                                      >ADD TO CART
+                                               </button>
+                                               <button type="button" class="mt-0 w-50 generic-btn red-hover-btn text-uppercase" data-toggle="modal" data-target="#exampleModalRight">
+                                                   Customization
+                                               </button>
+                                               @php
+                                                   } else {
+
+                                               @endphp
+                                               <button type="button" class="w-50 generic-btn mt-4 red-hover-btn text-uppercase" data-toggle="modal" data-target="#loginModal">
+                                                   Customization
+                                               </button>
+
+                                               @php
+
+
+                                                   }
+                                               @endphp
+
+                                           </div>
+                                         </form>
+
+                                     </div>
+
                                     </div>
-                                    <div class="single-product-component col-md-6">
-                                    @php
-                                    if($size_check->status == 'yes'){
-                    @endphp
-                                      
-                                        <button type="button" class="generic-btn mt-70 red-hover-btn text-uppercase" >
-                                            Your Size is saved in our system
-                                        </button>
-                                        @php
-                                    }else{
-                    @endphp
-                                        <button type="button" class="generic-btn mt-70 red-hover-btn text-uppercase" data-toggle="modal" data-target="#exampleModalRight">
-                                            Customization
-                                        </button>
-                                        @php
-                                    }
-                    @endphp
+{{--                                    <div class="single-product-component col-md-6">--}}
+
+
+{{--                                        <button type="button" class="generic-btn mt-70 red-hover-btn text-uppercase" >--}}
+{{--                                            Your Size is saved in our system--}}
+{{--                                        </button>--}}
+
+{{--                                        <button type="button" class="generic-btn mt-70 red-hover-btn text-uppercase" data-toggle="modal" data-target="#exampleModalRight">--}}
+{{--                                            Customization--}}
+{{--                                        </button>--}}
+
+{{--                                    </div>--}}
+                                    <div class="d-flex mt-3 flex-wrap">
+                                        <div class="sku mr-5" style="margin-top: 2px;"><span>Sku: </span> <strong>M-Hat-8</strong></div>
+                                        <div class="single-product-action">
+                                            <ul>
+                                                <li><a href="{{route('add.to.whishlist',['product_id' => $product->id])}}"><i class="fal fa-heart"></i> add to wishlist</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="single-product-action mt-35">
-                                        <ul>
-                                            <li><a href="wishlist.html"><i class="fal fa-heart"></i> add to wishlist</a>
+                                    <div class="fitsmart-button">
+                                        <div class="measureImg"><img src="https://cdn.shopify.com/s/files/1/0536/3594/0515/files/Group_34195.svg?v=1662464147"></div>
+                                        <div class="fitsmart-info">Estimated Free Shipping by <strong>Jun 28, 2023</strong>
+                                        </div>
+                                    </div>
+                                    <div class="single-product-bottom gray-border-top">
+                                        <ul class="nav nav-pills mt-50" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a data-toggle="pill" href="#desc-tab-1">Materials</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="active" data-toggle="pill" href="#desc-tab-2">Description</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a data-toggle="pill" href="#desc-tab-3">Washcare</a>
                                             </li>
                                         </ul>
+                                        <div class="container container-1200">
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show" id="desc-tab-1">
+                                                    <div class="single-product-tab-content">
+                                                        <p><strong>Composition</strong> : 100% Cotton</p>
+                                                        <p><strong>Weave</strong> : Poplin</p>
+                                                        <p><strong>Weight</strong> : Medium</p>
+                                                        <p><strong>Stretch</strong> : No Stretch</p>
+                                                        <p><strong>Shine</strong> : No Sheen</p>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade show active" id="desc-tab-2">
+                                                    <div class="single-product-tab-content">
+                                                        <p>
+                                                            {{$product->long_description}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="desc-tab-3">
+                                                    <div class="single-product-tab-content">
+                                                        <ul>
+
+                                                            <li>When dealing with cotton: </li>
+
+                                                            <li>Hand or machine wash with cold water. </li>
+
+                                                            <li>Air dry in the shade. </li>
+
+                                                            <li>Do not dry clean or tumble dry. </li>
+
+                                                            <li>Iron on hot using steam. </li>
+
+                                                            <li>Do not iron on suede.</li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="sku"><span>Sku: </span> <strong>M-Hat-8</strong></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="single-product-bottom mt-80 gray-border-top">
-                    <ul class="nav nav-pills justify-content-center mt-100" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="active" data-toggle="pill" href="#desc-tab-1">Description</a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="pill" href="#desc-tab-3">Additional information</a>
-                        </li>
-                    </ul>
-                    <div class="container container-1200">
-                        <div class="tab-content mt-60" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="desc-tab-1">
-                                <div class="single-product-tab-content">
-                                    <h3 class="title mb-30">Description</h3>
-                                  <p>
-                                      {{$product->long_description}}
-                                  </p>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="desc-tab-3">
-                                <div class="single-product-tab-content">
-                                    <h3 class="title mb-30">Additional information</h3>
-                                    <table class="table table-striped">
-                                        <tbody>
-                                        <tr>
-                                            <th>size</th>
-                                            <td>
-                                                <ul>
-                                                    <li><a href="shop2.html">3XL</a></li>
-                                                    <li><a href="shop2.html">L</a></li>
-                                                    <li><a href="shop2.html">M</a></li>
-                                                    <li><a href="shop2.html">S</a></li>
-                                                    <li><a href="shop2.html">XL</a></li>
-                                                    <li><a href="shop2.html">XXL</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>color</th>
-                                            <td>
-                                                <ul>
-                                                    <li><a href="shop2.html">Black</a></li>
-                                                    <li><a href="shop2.html">Blue</a></li>
-                                                    <li><a href="shop2.html">Gold</a></li>
-                                                    <li><a href="shop2.html">Gray</a></li>
-                                                    <li><a href="shop2.html">White</a></li>
-                                                    <li><a href="shop2.html">Yellow</a></li>
-                                                    <li><a href="shop2.html">Red</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -220,17 +258,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span style="font-size: 12px">Question 0 of 5</span>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                    </div>
+
+
+{{--                    <span style="font-size: 12px">Question 0 of 5</span>--}}
+{{--                    <div class="progress">--}}
+{{--                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>--}}
+{{--                    </div>--}}
                     <!-- Body type -->
                     <form method="post" action="{{route('size.store')}}">
                         @csrf
-                    <p class="mt-5">Select body type</p>
+                    <p class="">Select body type</p>
                     <div class="row">
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk" value="athletic">
+                            <input type="radio" name="body_type" id="img1" class="d-none imgbgchk" value="athletic" {{isset($my_size->body_type) && $my_size->body_type == 'athletic' ? 'checked': ''}}>
                             <label for="img1">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 1">
                                 <p>Athletic</p>
@@ -240,7 +280,7 @@
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img2" class="d-none imgbgchk" value="slight_belly">
+                            <input type="radio" name="body_type" id="img2" class="d-none imgbgchk" value="slight_belly" {{isset($my_size->body_type) && $my_size->body_type == 'slight_belly' ? 'checked': ''}}>
                             <label for="img2">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 2">
                                 <p>Slight Belly</p>
@@ -250,7 +290,7 @@
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground" id="img3" class="d-none imgbgchk" value="significiant_belly">
+                            <input type="radio" name="body_type" id="img3" class="d-none imgbgchk" value="significiant_belly" {{isset($my_size->body_type) && $my_size->body_type == 'significiant_belly' ? 'checked': ''}}>
                             <label for="img3">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 3">
                                 <p>Significiant Belly</p>
@@ -267,35 +307,35 @@
                     <p class="mt-5">Select Height</p>
                     <div class="radio-group">
                         <label>
-                            <input type="radio" name="option" value="1" checked>
+                            <input type="radio" name="height" value="1" {{isset($my_size->height) && $my_size->height == '1' ? 'checked': ''}}>
                             <div class="radio-button"><span>1</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="2">
+                            <input type="radio" name="height" value="2" {{isset($my_size->height) && $my_size->height == '2' ? 'checked': ''}}>
                             <div class="radio-button"><span>2</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="3">
+                            <input type="radio" name="height" value="3" {{isset($my_size->height) && $my_size->height == '3' ? 'checked': ''}}>
                             <div class="radio-button"><span>3</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="4">
+                            <input type="radio" name="height" value="4" {{isset($my_size->height) && $my_size->height == '4' ? 'checked': ''}}>
                             <div class="radio-button"><span>4</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="5">
+                            <input type="radio" name="height" value="5" {{isset($my_size->height) && $my_size->height == '5' ? 'checked': ''}}>
                             <div class="radio-button"><span>5</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="6">
+                            <input type="radio" name="height" value="6" {{isset($my_size->height) && $my_size->height == '6' ? 'checked': ''}}>
                             <div class="radio-button"><span>6</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="7">
+                            <input type="radio" name="height" value="7" {{isset($my_size->height) && $my_size->height == '7' ? 'checked': ''}}>
                             <div class="radio-button"><span>7</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option" value="8">
+                            <input type="radio" name="height" value="8" {{isset($my_size->height) && $my_size->height == '8' ? 'checked': ''}}>
                             <div class="radio-button"><span>8</span></div>
                         </label>
 
@@ -306,35 +346,35 @@
                     <p class="mt-5">Select Shirt Size</p>
                     <div class="radio-group">
                         <label>
-                            <input type="radio" name="option1" value="1" checked>
+                            <input type="radio" name="shirt_size" value="1" {{isset($my_size->size) && $my_size->size == '1' ? 'checked': ''}}>
                             <div class="radio-button"><span>1</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="2">
+                            <input type="radio" name="shirt_size" value="2" {{isset($my_size->size) && $my_size->size == '2' ? 'checked': ''}}>
                             <div class="radio-button"><span>2</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="3">
+                            <input type="radio" name="shirt_size" value="3" {{isset($my_size->size) && $my_size->size == '3' ? 'checked': ''}}>
                             <div class="radio-button"><span>3</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="4">
+                            <input type="radio" name="shirt_size" value="4" {{isset($my_size->size) && $my_size->size == '4' ? 'checked': ''}}>
                             <div class="radio-button"><span>4</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="5">
+                            <input type="radio" name="shirt_size" value="5" {{isset($my_size->size) && $my_size->size == '5' ? 'checked': ''}}>
                             <div class="radio-button"><span>5</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="6">
+                            <input type="radio" name="shirt_size" value="6" {{isset($my_size->size) && $my_size->size == '6' ? 'checked': ''}}>
                             <div class="radio-button"><span>6</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="7">
+                            <input type="radio" name="shirt_size" value="7" {{isset($my_size->size) && $my_size->size == '7' ? 'checked': ''}}>
                             <div class="radio-button"><span>7</span></div>
                         </label>
                         <label>
-                            <input type="radio" name="option1" value="8">
+                            <input type="radio" name="shirt_size" value="8" {{isset($my_size->size) && $my_size->size == '8' ? 'checked': ''}}>
                             <div class="radio-button"><span>8</span></div>
                         </label>
 
@@ -344,8 +384,8 @@
                     <p class="mt-5">Select Shoulder type</p>
                     <div class="row">
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground1213" id="img7" class="d-none imgbgchk" value="average" checked>
-                            <label for="img1">
+                            <input type="radio" name="shoulder_type" id="img4" class="d-none imgbgchk" value="average" {{isset($my_size->type) && $my_size->type == 'average' ? 'checked': ''}}>
+                            <label for="img4">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 1">
                                 <p>Average</p>
                                 <div class="tick_container">
@@ -354,8 +394,8 @@
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground1213" id="img8" class="d-none imgbgchk" value="slopping">
-                            <label for="img2">
+                            <input type="radio" name="shoulder_type" id="img5" class="d-none imgbgchk" value="slopping" {{isset($my_size->type) && $my_size->type == 'slopping' ? 'checked': ''}}>
+                            <label for="img5">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 2">
                                 <p>Sloping</p>
                                 <div class="tick_container">
@@ -371,31 +411,32 @@
                     <p class="mt-5">Select Preferred Fit</p>
                     <div class="row">
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground2" id="img4" class="d-none imgbgchk" value="slim" checked>
-                            <label for="img1">
+                            <input type="radio" name="prefered_fir" id="img6" class="d-none imgbgchk" value="slim" {{isset($my_size->fit) && $my_size->fit == 'slim' ? 'checked': ''}}>
+                            <label for="img6">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 1">
-                                <div class="tick_container">
                                 <p>Super Slim</p>
+                                <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
+
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground2" id="img5" class="d-none imgbgchk" value="structure">
-                            <label for="img2">
+                            <input type="radio" name="prefered_fir" id="img7" class="d-none imgbgchk" value="structure" {{isset($my_size->fit) && $my_size->fit == 'structure' ? 'checked': ''}}>
+                            <label for="img7">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 2">
-                                <div class="tick_container">
                                 <p>Structured</p>
+                                <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
                         </div>
                         <div class='col text-center'>
-                            <input type="radio" name="imgbackground2" id="img6" class="d-none imgbgchk" value="relax">
-                            <label for="img3">
+                            <input type="radio" name="prefered_fir" id="img8" class="d-none imgbgchk" value="relax" {{isset($my_size->fit) && $my_size->fit == 'relax' ? 'checked': ''}}>
+                            <label for="img8">
                                 <img src="https://cdn.shopify.com/s/files/1/0522/4238/3010/files/Athletic.svg" alt="Image 3">
-                                <div class="tick_container">
                                 <p>Relaxed</p>
+                                <div class="tick_container">
                                     <div class="tick"><i class="fa fa-check"></i></div>
                                 </div>
                             </label>
@@ -413,6 +454,39 @@
         </div>
     </div>
     <!-- Modal End -->
+
+    {{-- Login Model   --}}
+<div class="modal fade drawer right-align" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login To Continue</h5>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center mt-4 mb-4">
+                    Customer Login
+                </h4>
+                <form method="post" action="{{route('pd.login.post')}}">
+                    @csrf
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="email">Email address</label>
+                        <input type="email" id="email" name="email" class="form-control" />
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+    {{-- Login Model   --}}
     <div class="footer-top mt-120 pb-120 pt-115" style="background-color: #f5f5f5;">
         <div class="footer-top-wrapper">
             <div class="newsletter ">

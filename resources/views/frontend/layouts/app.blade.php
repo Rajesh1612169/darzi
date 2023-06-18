@@ -6,6 +6,7 @@
     <title>Mazia - Clean Minimal eCommerce HTML5 Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
@@ -186,5 +187,51 @@
 <script src="{{asset('frontend/js/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{asset('frontend/js/plugins.js')}}"></script>
 <script src="{{asset('frontend/js/main.js')}}"></script>
+<script>
+    function searchProdcut(val) {
+        // alert("changed")
+        $('#search-result-list').html('');
+        $.ajax({
+            url: '{{route('searchOption')}}',
+            method: 'GET',
+            data: {
+                searchKeyword: val,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                // console.log(response.html);
+                $('#search-result-list').append(response.html)
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+
+    }
+    function changeTotal(val, cart_id, product_item_id) {
+        // console.log(val)
+        // console.log(cart_id)
+        // console.log(product_item_id)
+
+        $.ajax({
+            type: "POST",
+            url: '{{route('update.my.cart.items')}}',
+            data: {val: val, cart_id: cart_id, product_item_id: product_item_id},
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            // dataType: json,
+            success: function(res){
+                // console.log(res)
+                window.location.reload()
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\UserSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserSizeController extends Controller
 {
@@ -17,7 +18,7 @@ class UserSizeController extends Controller
     public function index()
     {
         //
-   
+
     }
 
     /**
@@ -39,25 +40,43 @@ class UserSizeController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            "body_type"=> 'required',
+            "height"=> 'required',
+            "shirt_size"=> 'required',
+            "shoulder_type"=> 'required',
+            "prefered_fir"=> 'required'
+        ]);
+
         //
         $user_id = \Illuminate\Support\Facades\Auth::user()->id;
-        // dd($request);
-        $data = $request->validate([
-            "imgbackground"=> 'required',
-            "option"=> 'required',
-            "option1"=> 'required',
-            "imgbackground1213"=> 'required',
-            "imgbackground2"=> 'required'
-        ]);
-        $size = new UserSize();
-        $size->user_id = $user_id;
-        $size->body_type = $data['imgbackground'];
-        $size->height = $data['option'];
-        $size->size = $data['option1'];
-        $size->type = $data['imgbackground1213'];
-        $size->fit = $data['imgbackground2'];
-        $size->status = 'yes';
-        $size->save();
+
+        $size_exists = DB::table('user_sizes')->where('user_id', '=', $user_id)->first();
+//         dd($size_exists);
+         if ($size_exists !== null) {
+             $saved_size = UserSize::find($size_exists->id);
+//             dd($product);
+             $saved_size->user_id = $user_id;
+             $saved_size->body_type = $data['body_type'];
+             $saved_size->height = $data['height'];
+             $saved_size->size = $data['shirt_size'];
+             $saved_size->type = $data['shoulder_type'];
+             $saved_size->fit = $data['prefered_fir'];
+             $saved_size->status = 'yes';
+             $saved_size->save();
+         }else {
+             $size = new UserSize();
+
+             $size->user_id = $user_id;
+             $size->body_type = $data['body_type'];
+             $size->height = $data['height'];
+             $size->size = $data['shirt_size'];
+             $size->type = $data['shoulder_type'];
+             $size->fit = $data['prefered_fir'];
+             $size->status = 'yes';
+             $size->save();
+         }
+
         // Redirect or perform any other actions
         return redirect()->back()->with('message','Size Save Successfully');
     }

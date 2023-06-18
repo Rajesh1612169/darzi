@@ -28,4 +28,21 @@ class AuthController extends Controller
 
         return redirect(route('user.login.index'))->with('error', 'The provided credentials do not match our records.' );
     }
+    public function pdlogin(Request $request) {
+
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->back()->with('success', 'User Logged In Successfully' );
+        }
+
+        return redirect(route('user.login.index'))->with('error', 'The provided credentials do not match our records.' );
+    }
+
+
 }

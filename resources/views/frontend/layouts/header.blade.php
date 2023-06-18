@@ -1,5 +1,27 @@
 <!-- header section start -->
-<header class="header bright-turquoise-content pt-30 pb-30  header-sticky header-static">
+
+@php
+
+$products_categories = \Illuminate\Support\Facades\DB::table('product_category')->get();
+$product_brands = \Illuminate\Support\Facades\DB::table('brands')->get();
+$new_products = \Illuminate\Support\Facades\DB::table('new_products')->limit('6')->get();
+
+$user = \Illuminate\Support\Facades\Auth::user();
+$user_id= 0;
+if (isset($user) && $user !== null) {
+    $user_id = $user->id;
+}
+
+$cart_items = \Illuminate\Support\Facades\DB::table('shopping_cart as sc')
+    ->leftJoin('shopping_cart_items as sci', 'sci.cart_id', '=', 'sc.id')
+    ->leftJoin('new_products as np', 'np.id', '=', 'sci.product_item_id')
+    ->leftJoin('product_images as pi', 'pi.product_id', '=', 'np.id')
+    ->where('sc.user_id', '=', $user_id)
+    ->get();
+@endphp
+
+
+<header class="header bright-turquoise-content   header-sticky header-static">
     <div class="container-fluid">
         <div class="header-nav header-nav-2 position-relative">
             <div class="row align-items-center">
@@ -9,77 +31,38 @@
                     <div class="header-nav">
                         <nav>
                             <ul>
-                                <li><a href="javascript:void(0)" class="active"><span>Home  <i class="fal fa-angle-down"></i></span></a>
-
-                                    <ul class="submenu">
-                                        <li><a href="index.html">Home Fashion 1</a></li>
-                                        <li><a href="index2.html">Home Fashion 2</a></li>
-                                        <li><a href="index3.html">Home Fashion 3</a></li>
-                                        <li><a href="index4.html">Home Fashion 4</a></li>
-                                        <li><a href="index5.html">Home Fashion 5</a></li>
-                                        <li><a href="index6.html">Home Fashion 6</a></li>
-                                        <li><a href="index7.html">Home Fashion 7</a></li>
-
-                                    </ul>
+                                <li><a href="{{route('home.index')}}" class="active"><span>Home</span></a>
                                 </li>
                                 <li class="position-static"><a href="javascript:void(0)"><span>Shop  <i class="fal fa-angle-down"></i></span></a>
-                                    <div class="mega-menu">
+                                    <div class="mega-menu" style="background-image: url({{asset('frontend/img/header/1.jpg')}})">
                                         <div class="col-xl-7 pl-0 position-static">
-                                            <ul>
-                                                <li><a href="shop.html">Shop Layout</a></li>
-                                                <li><a href="shop4.html">Masonry – Grid</a></li>
-                                                <li><a href="shop3.html">Pagination</a></li>
-                                                <li><a href="shop2.html">Ajax Load More</a></li>
-                                                <li><a href="shop2.html">Infinite Scroll</a></li>
-                                                <li><a href="shop2.html">Sidebar Right</a></li>
-                                                <li><a href="shop.html">Sidebar Left</a></li>
+
+                                            <ul style="padding-left: 10px">
+                                                <h6>Product Categories</h6>
+                                                @foreach($products_categories as $item)
+                                                    <li><a href="{{route('shop.index')}}?category_id={{$item->id}}">{{$item->category_name}}</a></li>
+                                                @endforeach
                                             </ul>
 
-                                            <ul>
-                                                <li><a href="shop.html">Shop Pages</a></li>
-                                                <li><a href="shop2.html">List View</a></li>
-                                                <li><a href="shop3.html">Small Products</a></li>
-                                                <li><a href="shop2.html">Large Products</a></li>
-                                                <li><a href="shop3.html">Shop — 3 Items</a></li>
-                                                <li><a href="shop3.html">Shop — 4 Items</a></li>
-                                                <li><a href="shop4.html">Shop — 5 Items</a></li>
+                                            <ul style="padding-left: 10px">
+                                                <h6>Product Brands</h6>
+                                                @foreach($product_brands as $item)
+                                                <li><a href="{{route('shop.index')}}?brand_id={{$item->id}}">{{$item->brand_name}}</a></li>
+                                                @endforeach
                                             </ul>
-
-                                            <ul>
-                                                <li><a href="single-product-5.html">Product Layout</a></li>
-                                                <li><a href="single-product.html">Description Sticky</a></li>
-                                                <li><a href="single-product-5.html">Product Carousels</a></li>
-                                                <li><a href="single-product-3.html">Gallery Modern</a></li>
-                                                <li><a href="single-product-4.html">Thumbnail Left</a></li>
-                                                <li><a href="single-product-5.html">Thumbnail Right</a></li>
-                                                <li><a href="single-product-5.html">Thumbnail Botttom</a></li>
+                                            <ul style="padding-left: 10px">
+                                                <h6>New Products</h6>
+                                                @foreach($new_products as $item)
+                                                <li><a href="{{route('product.details', $item->id)}}">{{$item->product_name}}</a></li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="javascript:void(0)"><span>Blog <i class="fal fa-angle-down"></i></span> </a>
-                                    <ul class="submenu bold-content">
-                                        <li><a href="blog.html">Grid layout</a></li>
-                                        <li><a href="blog2.html">Large image</a></li>
-                                        <li><a href="blog3.html">Left Sidebar</a></li>
-                                        <li><a href="blog4.html">Right Sidebar</a></li>
-                                        <li><a href="blog5.html">No sidebar</a></li>
-                                    </ul>
+                                <li><a href="#"><span>Blog </span> </a>
+
                                 </li>
-                                <li><a href="javascript:void(0)"><span>Portfolio <i class="fal fa-angle-down"></i></span> </a>
-                                    <ul class="submenu bold-content">
-                                        <li><a href="portfolio.html">Single project</a></li>
-                                        <li><a href="portfolio2.html">Two Columns</a></li>
-                                        <li><a href="portfolio3.html">Three Columns</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="javascript:void(0)"><span>Page</span> <i class="fal fa-angle-down"></i></a>
-                                    <ul class="submenu">
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="question.html">Frequently Questions</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="about.html"><span>About</span></a></li>
                                 <li><a href="contact.html"><span>Contact</span></a></li>
                             </ul>
                         </nav>
@@ -94,6 +77,10 @@
                     <div class="header-right">
                         <ul class="text-right">
                             @php
+
+                            //$categories = \Illuminate\Support\Facades\DB::table('product_category')->limit(5)->get();
+                            //dd($categories);
+
                             if (Auth::user() === null) {
                             @endphp
                                 <li><a href="{{route('user.login.index')}}" class="account"><i class="fal fa-user-friends"></i> <article class="account-registar d-inline-block">Login/Sign up</article></a></li>
@@ -104,7 +91,7 @@
                                     <div class="close-search-popup">
                                         <i class="fal fa-times"></i>
                                     </div>
-                                    <div class="search-popup-inner mt-135">
+                                    <div class="search-popup-inner mt-60">
                                         <div class="search-title text-center">
                                             <h2>Search</h2>
                                         </div>
@@ -112,78 +99,81 @@
                                         <div class="search-content pt-55">
                                             <ul class="text-center">
                                                 <li><a href="javascript:void(0)" class="active">All categories</a></li>
-                                                <li><a href="javascript:void(0)">Clothing</a></li>
-                                                <li><a href="javascript:void(0)">Gift Cards</a></li>
-                                                <li><a href="javascript:void(0)">Handbag</a></li>
-                                                <li><a href="javascript:void(0)">Kids</a></li>
-                                                <li><a href="javascript:void(0)">Shoes</a></li>
-                                                <li><a href="javascript:void(0)">Sneaker</a></li>
-                                                <li><a  href="javascript:void(0)">Women</a></li>
+                                                @foreach($products_categories as $item)
+                                                    <li><a href="{{route('shop.index')}}?category_id={{$item->id}}">{{$item->category_name}}</a></li>
+                                                @endforeach
+{{--                                                <li><a href="javascript:void(0)">Clothing</a></li>--}}
+{{--                                                <li><a href="javascript:void(0)">Gift Cards</a></li>--}}
+{{--                                                <li><a href="javascript:void(0)">Handbag</a></li>--}}
+{{--                                                <li><a href="javascript:void(0)">Kids</a></li>--}}
+{{--                                                <li><a href="javascript:void(0)">Shoes</a></li>--}}
+{{--                                                <li><a href="javascript:void(0)">Sneaker</a></li>--}}
+{{--                                                <li><a  href="javascript:void(0)">Women</a></li>--}}
                                             </ul>
 
                                             <div class="search-form mt-35">
                                                 <form action="#" method="post">
-                                                    <input type="text" placeholder="Search Products...">
+                                                    <input type="text" placeholder="Search Products..." name="search" oninput="searchProdcut(this.value)">
                                                     <button type="submit"><i class="fal fa-search"></i></button>
                                                 </form>
                                             </div>
 
-                                            <div class="search-result-list">
-                                                <ul class="text-left">
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/1.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/2.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/3.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/1.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/2.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/3.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
+                                            <div class="search-result-list" >
+                                                <ul class="text-left" id="search-result-list">
+{{--                                                    <li class="d-block d-flex align-items-center">--}}
+{{--                                                        <div class="search-result-img">--}}
+{{--                                                            <img src="img/product/1.jpg" class="w-100" alt="">--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="search-result-desc pl-10">--}}
+{{--                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>--}}
+{{--                                                            <div class="price">$<span>399</span></div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </li>--}}
+{{--                                                    <li class="d-block d-flex align-items-center">--}}
+{{--                                                        <div class="search-result-img">--}}
+{{--                                                            <img src="img/product/2.jpg" class="w-100" alt="">--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="search-result-desc pl-10">--}}
+{{--                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>--}}
+{{--                                                            <div class="price">$<span>399</span></div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </li>--}}
+{{--                                                    <li class="d-block d-flex align-items-center">--}}
+{{--                                                        <div class="search-result-img">--}}
+{{--                                                            <img src="img/product/3.jpg" class="w-100" alt="">--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="search-result-desc pl-10">--}}
+{{--                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>--}}
+{{--                                                            <div class="price">$<span>399</span></div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </li>--}}
+{{--                                                    <li class="d-block d-flex align-items-center">--}}
+{{--                                                        <div class="search-result-img">--}}
+{{--                                                            <img src="img/product/1.jpg" class="w-100" alt="">--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="search-result-desc pl-10">--}}
+{{--                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>--}}
+{{--                                                            <div class="price">$<span>399</span></div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </li>--}}
+{{--                                                    <li class="d-block d-flex align-items-center">--}}
+{{--                                                        <div class="search-result-img">--}}
+{{--                                                            <img src="img/product/2.jpg" class="w-100" alt="">--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="search-result-desc pl-10">--}}
+{{--                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>--}}
+{{--                                                            <div class="price">$<span>399</span></div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </li>--}}
+{{--                                                    <li class="d-block d-flex align-items-center">--}}
+{{--                                                        <div class="search-result-img">--}}
+{{--                                                            <img src="img/product/3.jpg" class="w-100" alt="">--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="search-result-desc pl-10">--}}
+{{--                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>--}}
+{{--                                                            <div class="price">$<span>399</span></div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </li>--}}
                                                 </ul>
                                             </div>
                                         </div>
@@ -218,7 +208,7 @@
                                     <div class="close-search-popup">
                                         <i class="fal fa-times"></i>
                                     </div>
-                                    <div class="search-popup-inner mt-135">
+                                    <div class="search-popup-inner mt-60">
                                         <div class="search-title text-center">
                                             <h2>Search</h2>
                                         </div>
@@ -226,78 +216,28 @@
                                         <div class="search-content pt-55">
                                             <ul class="text-center">
                                                 <li><a href="javascript:void(0)" class="active">All categories</a></li>
-                                                <li><a href="javascript:void(0)">Clothing</a></li>
-                                                <li><a href="javascript:void(0)">Gift Cards</a></li>
-                                                <li><a href="javascript:void(0)">Handbag</a></li>
-                                                <li><a href="javascript:void(0)">Kids</a></li>
-                                                <li><a href="javascript:void(0)">Shoes</a></li>
-                                                <li><a href="javascript:void(0)">Sneaker</a></li>
-                                                <li><a  href="javascript:void(0)">Women</a></li>
+                                                @foreach($products_categories as $item)
+                                                    <li><a href="{{route('shop.index')}}?category_id={{$item->id}}">{{$item->category_name}}</a></li>
+                                                @endforeach
+                                                {{--                                                <li><a href="javascript:void(0)">Clothing</a></li>--}}
+                                                {{--                                                <li><a href="javascript:void(0)">Gift Cards</a></li>--}}
+                                                {{--                                                <li><a href="javascript:void(0)">Handbag</a></li>--}}
+                                                {{--                                                <li><a href="javascript:void(0)">Kids</a></li>--}}
+                                                {{--                                                <li><a href="javascript:void(0)">Shoes</a></li>--}}
+                                                {{--                                                <li><a href="javascript:void(0)">Sneaker</a></li>--}}
+                                                {{--                                                <li><a  href="javascript:void(0)">Women</a></li>--}}
                                             </ul>
 
                                             <div class="search-form mt-35">
                                                 <form action="#" method="post">
-                                                    <input type="text" placeholder="Search Products...">
+                                                    <input type="text" placeholder="Search Products..." name="search" oninput="searchProdcut(this.value)">
                                                     <button type="submit"><i class="fal fa-search"></i></button>
                                                 </form>
                                             </div>
 
-                                            <div class="search-result-list">
-                                                <ul class="text-left">
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/1.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/2.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/3.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/1.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">ELLE  - Recliner syntheti chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/2.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">RIMINI  - Folding leather deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="d-block d-flex align-items-center">
-                                                        <div class="search-result-img">
-                                                            <img src="img/product/3.jpg" class="w-100" alt="">
-                                                        </div>
-                                                        <div class="search-result-desc pl-10">
-                                                            <a href="single-product-5.html" class="title px-0">LANDSCAPE  - Folding fabric deck chair</a>
-                                                            <div class="price">$<span>399</span></div>
-                                                        </div>
-                                                    </li>
+                                            <div class="search-result-list" >
+                                                <ul class="text-left" id="search-result-list">
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -306,14 +246,16 @@
                                     </div>
                                 </div>
                             </li>
+
                             <li><a href="wishlist.html" data-toggle="tooltip" data-placement="bottom" title="view wishlist"><i class="fal fa-heart"><span>0</span></i></a></li>
-                            <li><a href="cart.html"><i class="fal fa-shopping-bag"><span>5</span></i></a>
+                            <li><a href="{{route('my.cart.items')}}"><i class="fal fa-shopping-bag"><span>{{count($cart_items)}}</span></i></a>
                             </li>
                             <li><a href="javascript:void(0)"><i class="fal fa-align-right"></i></a>
                                 <ul class="submenu bold-content text-right">
                                     <li><a href="{{route('user.profile')}}">My Account</a></li>
+                                    <li><a href="{{route('my.cart.items')}}">My Cart</a></li>
 {{--                                    <li><a href="checkout.html">Checkout</a></li>--}}
-                                    <li><a href="shop.html">Shop</a></li>
+                                    <li><a href="{{route('shop.index')}}">Shop</a></li>
                                     <li><a href="{{route('logout')}}">Logout</a></li>
 {{--                                    <li><a href="wishlist.html">Wishlist</a></li>--}}
 {{--                                    <li><a href="question.html">Frequently</a></li>--}}

@@ -35,15 +35,29 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($cart_items as $item)
+                                            @php
+                                             $sum = 0;
+                                            @endphp
+                                                @foreach($cart_items as $item)
                                                 @php
+
+                                                $total = $item->qty * $item->price;
+                                                $sum += $total;
+                                                //dd($item);
                                                     $images = json_decode($item->product_images);
                                                     //dd($images[0]);
                                                 @endphp
                                             <tr>
                                                 <td>
                                                     <div class="table-data">
-                                                        <button class="close-btn"><i class="fal fa-times"></i></button>
+{{--                                                        <form action="{{route('delete.cart.item')}}" method="POST">--}}
+{{--                                                            @csrf--}}
+{{--                                                            <input type="hidden" name="product_item_id" value="{{$item->product_item_id}}">--}}
+{{--                                                            <input type="hidden" name="cart_id" value="{{$item->cart_id}}">--}}
+{{--                                                            <button type="submit" class="close-btn"><i class="fal fa-times"></i></button>--}}
+{{--                                                        </form>--}}
+                                                        <a href="{{route('delete.cart.item', ['cart_id' => $item->cart_id, 'product_id' => $item->product_item_id])}}" class="close-btn"><i class="fal fa-times"></i></a>
+
                                                     </div>
                                                 </td>
                                                 <td>
@@ -55,20 +69,23 @@
                                                     <div class="table-data">
                                                         <h6><a href="single-product-3.html" class="title">{{$item->product_name}}</a></h6>
                                                     </div>
+                                                    <div class="table-data">
+                                                        <p><a href="single-product-3.html" class="title">{{$item->short_description}}</a></p>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div class="table-data">
-                                                        <span class="price">$90.00</span>
+                                                    <div class="table-  data">
+                                                        <span class="price">${{$item->price}}</span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="table-data">
-                                                        <input type="number" value="1" style="margin-right: 20px; width: 119px;">
+                                                        <input type="number" min="1" id="qty" onchange="changeTotal(this.value, `{{$item->cart_id}}`, `{{$item->product_item_id}}`)" value="{{$item->qty}}" style="margin-right: 20px; width: 119px;">
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="table-data">
-                                                        <span class="total">$90.00</span>
+                                                        <span class="total">${{$item->price * $item->qty}}</span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -76,13 +93,13 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="cupon">
-                                        <form action="#" method="POST">
-                                            <input type="text" placeholder="Cupon code" class="text-left pl-3" style="margin-right: 20px; width: 119px;">
-                                            <button class="generic-btn border-0 red-hover-btn text-uppercase">Apply Cupon</button>
-                                            <button class="generic-btn border-0 red-hover-btn text-uppercase float-right">Update Cart</button>
-                                        </form>
-                                    </div>
+{{--                                    <div class="cupon">--}}
+{{--                                        <form action="#" method="POST">--}}
+{{--                                            <input type="text" placeholder="Cupon code" class="text-left pl-3" style="margin-right: 20px; width: 119px;">--}}
+{{--                                            <button class="generic-btn border-0 red-hover-btn text-uppercase">Apply Cupon</button>--}}
+{{--                                            <button class="generic-btn border-0 red-hover-btn text-uppercase float-right">Update Cart</button>--}}
+{{--                                        </form>--}}
+{{--                                    </div>--}}
                                 </form>
                             </div>
                         </div>
@@ -93,7 +110,7 @@
                                     <tbody>
                                     <tr>
                                         <th>Subtotal</th>
-                                        <td>$134.00</td>
+                                        <td>${{$sum}}</td>
                                     </tr>
                                     <tr>
                                         <th>Shipping</th>
@@ -128,11 +145,11 @@
                                     </tr>
                                     <tr>
                                         <th>Total</th>
-                                        <td><strong>$134.00</strong></td>
+                                        <td><strong>${{$sum}}</strong></td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <a href="checkout.html" class="mt-40 generic-btn red-hover-btn w-100 d-block" style="height: 50px;">Procced to checkout</a>
+                                <a href="{{route('create.new.order')}}" class="mt-40 generic-btn red-hover-btn w-100 d-block" style="height: 50px;">Proceed to checkout</a>
                             </div>
                             <!-- /. cart widget -->
                         </div>
@@ -161,7 +178,6 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
             <!-- /.newsletter -->
@@ -203,4 +219,8 @@
         </div>
 
     </div>
+
+    <script>
+
+    </script>
 @endsection

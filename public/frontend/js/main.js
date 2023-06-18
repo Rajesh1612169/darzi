@@ -27,10 +27,10 @@ $(window).on('scroll', function () {
 		});
 	} else {
 		$(".header-sticky").addClass("sticky");
-		$('header.header').css({
-			'paddingTop': '30px',
-			'paddingBottom': '15px',
-		})
+		// $('header.header').css({
+		// 	'paddingTop': '30px',
+		// 	'paddingBottom': '15px',
+		// })
 		$('.sticky').css({
 			'top': '0'
 		})
