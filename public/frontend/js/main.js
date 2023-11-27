@@ -529,7 +529,7 @@ $('#ship-box').on('click', function () {
 });
 
 
-	//   mixitup
-	var mixer = mixitup('.container-fluid');
+// 	//   mixitup
+// 	var mixer = mixitup('.container-fluid');
 
 })(jQuery);

@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('product_configuration', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_item_id');
-            $table->unsignedBigInteger('variation_option_id');
+            $table->integer('product_item_id');
+            $table->integer('variation_option_id');
             $table->timestamps();
-            $table->foreign('product_item_id')->references('id')->on('product_items')
-                ->onDelete('cascade');
-            $table->foreign('variation_option_id')->references('id')->on('product_variation_options')
-                ->onDelete('cascade');
         });
     }
 

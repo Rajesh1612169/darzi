@@ -1,25 +1,23 @@
-<div class="container m-5">
-    <h4>My Account</h4>
-    <hr>
-    <div class="row">
-        <div class="col-md-2 mb-3">
-            <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+
+            <ul class="nav nav-pills flex-column" id="myTab" role="tablist" style="border: 1px solid #c89419;padding: 10px;border-radius: 10px;">
                 <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                    <a class="nav-link {{ (request()->is('user/profile')) ? 'active show' : '' }}" href="{{ route('user.profile') }}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                    <a class="nav-link {{ (request()->is('user/address')) || (request()->is('user/address/create')) ? 'active show' : '' }}" href="{{ route('user.view.address') }}">My Address</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="whishlist-tab" data-toggle="tab" href="#whishlist" role="tab" aria-controls="whishlist" aria-selected="false">Whishlist</a>
+                    <a class="nav-link {{ (request()->is('my/size')) ? 'active show' : '' }}" href="{{ route('mySize') }}">My Sizes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                    <a class="nav-link {{ (request()->is('user/whishlist')) ? 'active show' : '' }} " href="{{ route('user.whishlist') }}">Wishlist</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('my/orders')) ? 'active show' : '' }} " href="{{ route('my.orders') }}">My Orders</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('logout')}}">Log Out</a>
                 </li>
             </ul>
-        </div>
         <!-- /.col-md-4 -->
 
